@@ -1,10 +1,25 @@
 Answers to Homework 4
 Drew Geurin
 1) select name from Highschooler, Friend where ID = ID1 AND ID2 IN (select ID from Highschooler where name = 'Gabriel'); 
+
 2) select name, grade from Highschooler where NOT IN (select DISTINCT name from Likes a, Highschooler b where b.ID = a.ID1 OR b.ID = a.ID2); 
 (A comment on number two: I ran the sub quarry by itslf. It gave me the inverse of the set I wanted. However, anytime I tried using the NOT IN operator on it the program wouldn't work.)
-3) select a.name, a.grade, b.name, b.grade from Highschooler a, Highschooler b  where b.grade < a.grade-1; 
+
+select name, grade from Highschooler where name NOT IN (select DISTINCT name from Likes a, Highschooler b where b.ID = a.ID1 OR b.ID = a.ID2); NOT
+(CORRECT ANSWER!!!)
+
+3)  select l.ID2, COUNT(*) from  Likes l  GROUP BY l.ID2 HAVING COUNT(*) > 1; 
+(selects student number of students liked by two or more students)
+
+ select h.name, h.grade from Highschooler h Likes k where h.ID = k.ID2 AND IN(select l.ID2, COUNT(*) from  Likes l  GROUP BY l.ID2 HAVING COUNT(*) > 1); 
+ (failed attempt #1)
+ 
+ select DISTINCT name, grade from Highschooler, Likes  where ID = ID2 AND ID2 IN(select ID2 from Likes GROUP BY ID2 HAVING COUNT(*) > 1);     
+ (CORRECT ANSWER!!!)
+
+4) select a.name, a.grade, b.name, b.grade from Highschooler a, Highschooler b  where b.grade < a.grade-1; 
 (The statement above gets all pairings of students with a two year difference.)
+
 select h1.name, h1.grade, h2.name, h2.grade from Likes l, Highschooler h1, Highschooler h2 where h1.ID = l.ID1 AND h2.ID = l.ID2; 
 (The statement above gets all the Likes relationships.)
 (I combined the statements into one larger statement using the IN operator. This didn't work because the rteturned table from the IF statement has two names and two grades.)
@@ -12,8 +27,10 @@ select h1.name, h1.grade, h2.name, h2.grade from Likes l, Highschooler h1, Highs
 select a.name, a.grade, b.name, b.grade 
 from Highschooler a, Highschooler b  
 where b.grade < a.grade-1 
-INTERSECT 
+AND b.name IN
 select h1.name, h1.grade, h2.name, h2.grade
 from Likes l, Highschooler h1, Highschooler h2 
 where h1.ID = l.ID1 AND h2.ID = l.ID2; 
 (I feel like I'm onto something here. I'm gonna move on for time sake.)
+
+8)
