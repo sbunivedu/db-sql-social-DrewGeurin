@@ -28,9 +28,9 @@ select a.name, a.grade, b.name, b.grade
 from Highschooler a, Highschooler b  
 where b.grade < a.grade-1 
 AND b.name IN
-select h1.name, h1.grade, h2.name, h2.grade
+(select h1.name, h1.grade, h2.name, h2.grade
 from Likes l, Highschooler h1, Highschooler h2 
-where h1.ID = l.ID1 AND h2.ID = l.ID2; 
+where h1.ID = l.ID1 AND h2.ID = l.ID2); 
 (I feel like I'm onto something here. I'm gonna move on for time sake.)
 
-8)
+8) select count(a.ID1) from Friend a, Friend b where a.ID1 = b.ID1;
